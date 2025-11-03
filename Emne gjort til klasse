@@ -1,12 +1,6 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Nov  3 15:14:38 2025
-
-@author: Olli
-"""
 class Emne:
     def __init__(self, emnekode, semester, studiepoeng):
-        self.emnekode = emnekode.upper
+        self.emnekode = emnekode.upper()
         self.semester = semester
         self.studiepoeng = studiepoeng 
     def __str__(self):
@@ -54,6 +48,4 @@ def oppgave1():
     
     print("\nSender bruker tilbake til meny.")
     return emner
-
-
     
