@@ -1,0 +1,62 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Nov  3 15:14:38 2025
+
+@author: Olli
+"""
+   
+class Emne:
+    def __init__(self, emnekode, semester, studiepoeng):
+        self.emnekode = emnekode.upper()
+        self.semester = semester
+        self.studiepoeng = studiepoeng 
+    def __str__(self):
+        return f"{self.emnekode} - {self.semester} - {self.studiepoeng} stp"
+    
+def lag_nytt_emne():
+    emner = []
+
+    print("Registrering av emner")
+    print("Skriv 'stopp' som emnekode for å avslutte.\n")
+        
+            
+    while True:
+       
+        kode = input("Skriv inn emnekode: ").upper()
+    
+        if kode == "STOPP":
+            break
+    
+        if any(emne.emnekode == kode for emne in emner):
+            print(" Dette emnet finnes allerede. Prøv igjen.\n")
+            continue
+
+    
+    
+        sem = input("Hvilket semester undervises emnet (høst/vår): ").lower()
+        if sem not in ["vår", "høst"]:
+            print("Skriv enten høst  eller vår")
+            continue
+
+        try:
+            poeng = int(input("Antall studiepoeng: "))
+        except ValueError:
+            print("Det var ikke et tall, start på nytt")
+            continue
+        
+    
+        nytt_emne = Emne(kode, sem, poeng)
+        emner.append(nytt_emne)
+    
+        print(f"Emnet {kode}, {poeng} stp, {sem} semester, er lagt til.\n")
+    
+    print("\n Registrerte emner")
+    for emne in emner:
+        print(emne)
+    
+    print("\nSender bruker tilbake til meny.")
+    return emner
+    
+
+
+    
