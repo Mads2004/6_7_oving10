@@ -1,0 +1,31 @@
+def oppgave9():
+    try:
+        with open("studiestuff.txt", "w", encoding="utf-8") as fil:
+            fil.write("Emner:\n")
+            if not emner:
+                fil.write("  Ingen registrerte emner.\n")
+            else:
+                for i, emne in enumerate(emner, start=1):
+                    fil.write(f"  {i}. {emne.emnekode} - {emne.semester} - {emne.studiepoeng} stp\n")
+
+            fil.write("\nStudieplaner:\n")
+            if not studieplaner:
+                fil.write("Ingen registrerte studieplaner.\n")
+            else:
+                for i, plan in enumerate(studieplaner, start=1):
+                    fil.write(f"\n {i}. {plan.tittel} (ID: {plan.id})\n")
+                    semestre = plan.vis_semestre()
+                    if not semestre:
+                        fil.write("Ingen semestre i denne planen.\n")
+                        continue
+                    for sem in semestre:
+                        emneliste = plan.emner_per_semester.get(sem, [])
+                        fil.write(f"    Semester {sem}:\n")
+                        if not emneliste:
+                            fil.write("Ingen emner.\n")
+                        else:
+                            for em in emneliste:
+                                fil.write(f"- {em.emnekode} ({em.studiepoeng} stp, undervisning: {em.semester})\n")
+        print("Data skrevet til studiestuff.txt")
+    except Exception as e:
+        print("Feil ved skriving til fil:", e)
