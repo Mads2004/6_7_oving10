@@ -1,0 +1,45 @@
+
+def sjekk_studieplan():
+    if not studieplaner:
+        print("Ingen studieplaner er registrert.")
+        return
+
+    print("Registrerte studieplaner:")
+    for plan in studieplaner:
+        print(f"{plan.id}: {plan.tittel}")
+
+    søkt_id = input("Skriv inn ID på studieplan som skal sjekkes: ").strip()
+    plan = finn_plan_med_id(studieplaner, søkt_id)
+    if not plan:
+        print("Fant ikke studieplan med den ID-en.")
+        return
+
+    feil = []
+
+    sett = set()
+    for emneliste in plan.emner_per_semester.values():
+        for e in emneliste:
+            if e.emnekode in sett:
+                feil.append(f"Duplikat: {e.emnekode} ligger i flere semestre.")
+            else:
+                sett.add(e.emnekode)
+
+    for sem in range(1, 7):
+        emner_i_sem = plan.emner_per_semester.get(sem, [])
+        stp = sum(e.studiepoeng for e in emner_i_sem)
+        if stp != 30:
+            feil.append(f"Semester {sem}: {stp} stp.")
+
+        forventet = "høst" if sem % 2 == 1 else "vår"
+        for e in emner_i_sem:
+            if e.semester != forventet:
+                feil.append(
+                    f"{e.emnekode} i semester {sem} har termin '{e.semester}' (forventet '{forventet}')."
+                )
+
+    if feil:
+        print("\nPlanen er IKKE gyldig:")
+        for f in sorted(set(feil)):
+            print("\n", f)
+    else:
+        print("\nPlanen er gyldig!")
