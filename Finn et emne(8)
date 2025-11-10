@@ -1,0 +1,30 @@
+def oppgave8():
+    søk = input("Skriv emnekode eller del av emnekode du vil finne: ").strip().upper()
+    if not søk:
+        print("Tomt .")
+        return []
+
+    funn = []
+    for plan in studieplaner:
+        for sem, emneliste in plan.emner_per_semester.items():
+            for emne in emneliste:
+                if søk in emne.emnekode.upper():
+                    funn.append((plan, sem, emne))
+
+    if not funn:
+        print(f"Ingen studieplaner har emnet '{søk}'")
+        return []
+
+    
+    from collections import defaultdict
+    resultat = defaultdict(list)
+    for plan, sem, emne in funn:
+        resultat[plan].append((sem, emne))
+
+    print(f"\nFant emnet '{søk}' i:")
+    for plan, entries in resultat.items():
+        print(f"\nStudieplan: {plan.tittel} (ID: {plan.id})")
+        
+        
+        for sem, emne in entries:
+            print(f"  Semester {sem}: {emne.emnekode} - {emne.studiepoeng} stp (undervises: {emne.semester})")
