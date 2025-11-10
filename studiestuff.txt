@@ -1,0 +1,36 @@
+Emner:
+  1. A - høst - 10 stp
+  2. B - høst - 10 stp
+  3. C - høst - 10 stp
+
+Studieplaner:
+
+ 1. 1 (ID: 1)
+    Semester 1:
+- A (10 stp, undervisning: høst)
+- B (10 stp, undervisning: høst)
+- C (10 stp, undervisning: høst)
+    Semester 2:
+- A (10 stp, undervisning: høst)
+    Semester 3:
+Ingen emner.
+    Semester 4:
+Ingen emner.
+    Semester 5:
+Ingen emner.
+    Semester 6:
+Ingen emner.
+
+ 2. test2 (ID: 2)
+    Semester 1:
+Ingen emner.
+    Semester 2:
+Ingen emner.
+    Semester 3:
+Ingen emner.
+    Semester 4:
+Ingen emner.
+    Semester 5:
+Ingen emner.
+    Semester 6:
+Ingen emner.
