@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 emner = []
 studieplaner = []
 
@@ -40,6 +41,8 @@ class Studieplan:
     def __str__(self):
         return f"{self.id} - {self.tittel}"
 
+
+
 class Emne:
     def __init__(self, emnekode, semester, studiepoeng):
         self.emnekode = emnekode.upper()
@@ -49,6 +52,9 @@ class Emne:
         return f"{self.emnekode} - {self.semester} - {self.studiepoeng} stp"        
 
         
+
+
+
 def lag_nytt_emne():
     global emner  
     print("Registrering av emner")
@@ -148,27 +154,8 @@ def meny(emner, planer):
 
     return planer
 
-def les_til_fil():
-    try:
-        with open ("studiestuff.txt", "w") as fil:
-            fil.write(f"{'Studieplan':<10}   {'Emner':>5}\n")
-            fil.write("" "\n")
-            for i, semesterliste in enumerate(studieplan, start=1):
-             fil.write(f"Semester {i}| {semesterliste}\n")         
-    except FileNotFoundError:
-        print("Filnavn ikke riktig")
 
-def les_fra_fil():
-    try:
-        with open ("test.txt", "r") as fil:
-            skriv_ut = fil.read()
-            print(skriv_ut)
-    except FileNotFoundError:
-        print("filen finnes ikke")
 
-def avslutt_program():
-    print("Avslutter")
-    
 def oppgave3():
     if not studieplaner:
         print("Ingen studieplaner er registrert.")
@@ -206,6 +193,54 @@ def oppgave3():
     except (ValueError, IndexError):
         print("Ugyldig valg.")
         
+
+def tom_studieplan(plan_id, tittel, antall_semestre=6):
+    emner_per_semester = {}
+    for sem in range(1, antall_semestre + 1):
+        emner_per_semester[sem] = []
+
+    plan = {
+        "id": plan_id,
+        "tittel": tittel,
+        "emner_per_semester": emner_per_semester
+    }
+    return plan
+
+
+def tom_studieplan_obj(plan_id, tittel, antall_semestre=6):
+    plan = Studieplan(plan_id, tittel)
+    for sem in range(1, antall_semestre + 1):
+        plan.emner_per_semester[sem] = []
+    return plan
+
+def lag_tom_studieplan():
+    print(" Lag en ny tom studieplan")
+    plan_id = input("ID: ")
+    tittel = input("Tittel: ")
+    ant_txt = input("Antall semestre (Enter = 6): ")
+
+    if ant_txt == "":
+        antall_semestre = 6
+    else:
+        try:
+            antall_semestre = int(ant_txt)
+            if antall_semestre < 1:
+                print("Antall semestre må være minst 1. Setter til 6.")
+                antall_semestre = 6
+        except ValueError:
+            print("Ugyldig tall. Setter antall semestre til 6.")
+            antall_semestre = 6
+
+    plan = tom_studieplan_obj(plan_id, tittel, antall_semestre)
+    studieplaner.append(plan)
+
+    print("\n Studieplan opprettet!")
+    print(f"ID: {plan.id}")
+    print(f"Tittel: {plan.tittel}")
+    for sem_nr in sorted(plan.emner_per_semester):
+        print(f"  Semester {sem_nr}: {plan.emner_per_semester[sem_nr]}")
+
+    return plan
         
 def valg_1():
     lag_nytt_emne()
@@ -258,6 +293,10 @@ menyvalg_funksjoner = {
     11: valg_11
                       }
 
+
+def avslutt_program():
+    print("avslutter")
+    
 def velger():
     print(menytekst)
     try:
@@ -273,3 +312,7 @@ def velger():
         velger()
 
 velger()
+
+ 
+
+
